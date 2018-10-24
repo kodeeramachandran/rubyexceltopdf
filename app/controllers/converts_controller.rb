@@ -4,21 +4,7 @@ class ConvertsController < ApplicationController
   # GET /converts
   # GET /converts.json
   def index
-   render json: {status:"Success"}
-  end
-
-  # GET /converts/1
-  # GET /converts/1.json
-  def show
-  end
-
-  # GET /converts/new
-  def new
-   
-  end
-
-  # GET /converts/1/edit
-  def edit
+   render json: {msg: "Yor are tring this servoice with get method please try with post",status:"Success"}
   end
 
   # POST /converts
@@ -41,26 +27,4 @@ class ConvertsController < ApplicationController
   render json: {download_file_path: download_file_path}, status: :created, location: "Done"
   end
 
-  # PATCH/PUT /converts/1
-  # PATCH/PUT /converts/1.json
-  def update
-    
-  end
-
-  # DELETE /converts/1
-  # DELETE /converts/1.json
-  def destroy
-    
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_convert
-     
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def convert_params
-     
-    end
 end
