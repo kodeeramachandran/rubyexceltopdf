@@ -25,7 +25,7 @@ class ConvertsController < ApplicationController
   
   #%x("#{Rails.root}/public/office/program/soffice" --invisible --nologo --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx")
 
-  %x("mono "#{Rails.root}/public/OfficeToPDF.exe #{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx #{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf")
+  %x("mono #{Rails.root}/public/OfficeToPDF.exe #{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx #{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf")
 
   outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf").to_a.join);
   download_file_path = "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf"
