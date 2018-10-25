@@ -1,0 +1,11 @@
+[Version]
+AllLanguages=en-US
+BuildVersion=
+buildid=caa99a82bb91771053cae8d86da6ca2883357540
+ExtensionUpdateURL=http://updateexte.libreoffice.org/ExtensionUpdateService/check.Update
+UpdateChannel=
+ReferenceOOoMajorMinor=4.1
+UpdateID=LibreOfficeDev_6_en-US
+UpdateURL=
+UpdateUserAgent=<PRODUCT> (${buildid}; ${_OS}; ${_ARCH}; <OPTIONAL_OS_HW_DATA>)
+Vendor=ec2-user
