@@ -24,9 +24,11 @@ class ConvertsController < ApplicationController
   #Libreconv.convert("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf","#{Rails.root}/public/office/program/soffice")   
   
   %x("#{Rails.root}/public/office/program/soffice" --headless --invisible --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx")
+
+  outputfileBase64 = ActiveSupport::Base64.encode64(open("#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf") { |io| io.read })
   download_file_path = "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf"
   
-  render json: {download_file_path: download_file_path}, status: :created, location: "Done"
+  render json: {download_file_path: outputfileBase64}, status: :created, location: "Done"
   end
 
 end
