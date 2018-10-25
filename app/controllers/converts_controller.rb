@@ -21,7 +21,7 @@ class ConvertsController < ApplicationController
   # download_file_path = file_conversion.convert
   
   # File conversion process from xlsx to pdf
-  Libreconv.convert("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf","/usr/bin/soffice")   
+  Libreconv.convert("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf")   
   download_file_path = "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf"
   
   render json: {download_file_path: download_file_path}, status: :created, location: "Done"
