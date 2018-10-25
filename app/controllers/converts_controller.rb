@@ -23,7 +23,7 @@ class ConvertsController < ApplicationController
   # File conversion process from xlsx to pdf
   #Libreconv.convert("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf","#{Rails.root}/public/office/program/soffice")   
   
-  %x("#{Rails.root}/public/office/program/soffice" --headless --invisible --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf" "#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx")
+  %x("#{Rails.root}/public/office/program/soffice" --headless --invisible --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx")
   download_file_path = "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf"
   
   render json: {download_file_path: download_file_path}, status: :created, location: "Done"
