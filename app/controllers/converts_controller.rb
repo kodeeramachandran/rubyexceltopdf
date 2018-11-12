@@ -11,8 +11,7 @@ class ConvertsController < ApplicationController
   # POST /converts.json
   def create      
     path = File.join Rails.root, 'public'
-    puts "-----------------"
-    puts path
+   
     File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       f.write(Base64.decode64(params[:file_convertor][:file]))
     end
