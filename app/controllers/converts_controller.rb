@@ -17,7 +17,7 @@ class ConvertsController < ApplicationController
     #File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       #f.write(Base64.decode64(params[:file_convertor][:file]))
     #end
-    puts URI.decode(params).force_encoding('UTF-8')
+    puts params.to_s
     puts "-------------------"
     #File.open("#{Rails.root}/public/#{fname.xlsx}", 'wb') do |f|
      # f.write(request.body)
