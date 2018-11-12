@@ -15,10 +15,10 @@ class ConvertsController < ApplicationController
     #File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       #f.write(Base64.decode64(params[:file_convertor][:file]))
     #end
-    puts params
+    puts request.body
      puts "-------------------"
     File.open("#{Rails.root}/public/#{fname.xlsx}", 'wb') do |f|
-      f.write(params)
+      f.write(request.body)
     end
   # file_conversion = FileConversion.new(tempfile)
   # download_file_path = file_conversion.convert
