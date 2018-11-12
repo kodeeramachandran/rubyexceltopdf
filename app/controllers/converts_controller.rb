@@ -25,7 +25,9 @@ class ConvertsController < ApplicationController
   #%x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}.xlsx")  
   %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{fileurl}" "#{Rails.root}/public/#{fname}.xlsx")  
 
-  outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fname}.pdf").to_a.join);
+  #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fname}.pdf").to_a.join);
+  file = File.open("#{Rails.root}/public/file_conversion/#{fname}.pdf", "rb")
+  outputfileBase64 = file.read
   download_file_path = "#{Rails.root}/public/file_conversion/#{fname}.pdf"
   
   render json: {download_file_path: outputfileBase64}, status: :created, location: "Done"
