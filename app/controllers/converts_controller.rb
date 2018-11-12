@@ -16,7 +16,7 @@ class ConvertsController < ApplicationController
     #File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       #f.write(Base64.decode64(params[:file_convertor][:file]))
     #end
-    puts request.inspect
+    puts params
     puts "-------------------"
     #File.open("#{Rails.root}/public/#{fname.xlsx}", 'wb') do |f|
      # f.write(request.body)
@@ -29,7 +29,7 @@ class ConvertsController < ApplicationController
   
  
   
-  render json: {download_file_path: request.body}, status: :created, location: "Done"
+  render json: {download_file_path:params}, status: :created, location: "Done"
   end
 
 end
