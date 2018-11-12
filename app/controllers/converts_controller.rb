@@ -15,7 +15,7 @@ class ConvertsController < ApplicationController
     #File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       #f.write(Base64.decode64(params[:file_convertor][:file]))
     #end
-    fileurl= "https://sixt--salesdev.cs105.my.salesforce.com/services/apexrest/b2b-signUp/digital-lead/aKy1w00000000j1CAA?screen-name=OFFER_RATE"
+    fileurl= "https://sixt--salesdev--c.cs105.content.force.com/sfc/dist/version/download/?oid=00D1w0000008aNu&ids=0681w0000008gdZ&d=%2Fa%2F1w0000008PL5%2FKejr7MEITHSTV8mPTJGo0CIqkAU9VmP3CFHIFGURLJc&asPdf=false"
   # file_conversion = FileConversion.new(tempfile)
   # download_file_path = file_conversion.convert
   
@@ -26,7 +26,7 @@ class ConvertsController < ApplicationController
   %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{fileurl}" "#{Rails.root}/public/#{fname}.xlsx")  
 
   #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fname}.pdf").to_a.join);
-  file = File.open("#{Rails.root}/public/file_conversion/#{fname}.pdf", "wb")
+  file = File.open("#{Rails.root}/public/file_conversion/#{fname}.pdf", "rb")
   outputfileBase64 = file.read
   download_file_path = "#{Rails.root}/public/file_conversion/#{fname}.pdf"
   
