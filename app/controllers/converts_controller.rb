@@ -12,11 +12,11 @@ class ConvertsController < ApplicationController
   def create      
     path = File.join Rails.root, 'public'
     puts "-------------------"
-    fname = "ratesheet";
+    fname = "ratesheet"
     #File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
       #f.write(Base64.decode64(params[:file_convertor][:file]))
     #end
-    puts params
+    puts request.inspect
     puts "-------------------"
     #File.open("#{Rails.root}/public/#{fname.xlsx}", 'wb') do |f|
      # f.write(request.body)
