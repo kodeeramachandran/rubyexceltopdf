@@ -1,4 +1,5 @@
 require_dependency 'libreconv'
+require 'uri'
 class ConvertsController < ApplicationController
  skip_before_action :verify_authenticity_token  
   # GET /converts
