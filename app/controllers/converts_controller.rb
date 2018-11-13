@@ -13,12 +13,10 @@ class ConvertsController < ApplicationController
     path = File.join Rails.root, 'public'
     fileName = "ratesheet"
 
-    #File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
-      #f.write(Base64.decode64(params[:fileValue]))
-    #end
     File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
-      f.write(params[:fileValue])
+      f.write(Base64.decode64(params[:fileValue]))
     end
+    
 
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fileName}.xlsx")
 
