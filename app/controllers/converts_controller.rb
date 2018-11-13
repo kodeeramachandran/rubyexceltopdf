@@ -11,24 +11,21 @@ class ConvertsController < ApplicationController
   # POST /converts.json
   def create      
     path = File.join Rails.root, 'public'
-   
-    File.open("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", 'wb') do |f|
-      f.write(Base64.decode64(params[:file_convertor][:file]))
+    fileName = "ratesheet"
+
+    #File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
+      #f.write(Base64.decode64(params[:fileValue]))
+    #end
+    File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
+      f.write(params[:fileValue])
     end
-    
 
-  # file_conversion = FileConversion.new(tempfile)
-  # download_file_path = file_conversion.convert
-  
-  # File conversion process from xlsx to pdf
-  #Libreconv.convert("#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx", "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf","#{Rails.root}/public/office/program/soffice")   
-  
-  %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{params[:file_convertor][:filename]}.xlsx")
+    %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fileName}.xlsx")
 
   
 
-  outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf").to_a.join);
-  download_file_path = "#{Rails.root}/public/file_conversion/#{params[:file_convertor][:filename]}.pdf"
+  outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").to_a.join);
+  download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"
   
   render json: {download_file_path: outputfileBase64}, status: :created, location: "Done"
   end
