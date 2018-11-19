@@ -13,7 +13,8 @@ class ConvertsController < ApplicationController
   def create      
     path = File.join Rails.root, 'public'
     fileName = params['File Name'];
-
+puts params
+puts "-----------------";
     File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
       f.write(params['Xlsx Body'])
     end 
