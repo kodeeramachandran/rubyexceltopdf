@@ -21,7 +21,7 @@ class ConvertsController < ApplicationController
   
   #download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"
   
-  connectsalesforce(params['ParentId'],fileName);
+  #connectsalesforce(params['ParentId'],fileName);
   render json: {recived: true}, status: :created, location: "Done"
   end
   def connectsalesforce(id,fname)   
@@ -39,7 +39,7 @@ class ConvertsController < ApplicationController
     client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: 'convert pdf',
-                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{fname}.pdf'))
+                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{fname}.pdf')))
    
   end
 end
