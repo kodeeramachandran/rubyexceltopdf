@@ -13,16 +13,15 @@ class ConvertsController < ApplicationController
   def create      
     path = File.join Rails.root, 'public'
     fileName = params['File Name'];
-puts params
-puts "-----------------";
-   # File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
-    #  f.write(params['Xlsx Body'])
-    #end 
+
+    File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
+     f.write(params['Xlsx Body'])
+    end 
 
   
   #download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"
   
-  #connectsalesforce(params['ParentId'],fileName);
+  connectsalesforce(params['ParentId'],fileName);
   render json: {recived: true}, status: :created, location: "Done"
   end
   def connectsalesforce(id,fname)   
