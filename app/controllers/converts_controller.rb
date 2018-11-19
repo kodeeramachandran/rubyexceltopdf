@@ -24,15 +24,14 @@ class ConvertsController < ApplicationController
   connectsalesforce(params['ParentId'],fileName);
   render json: {recived: true}, status: :created, location: "Done"
   end
-  def connectsalesforce(id,fname)
-   
-    puts "--------"
+  def connectsalesforce(id,fname)   
+
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fileName}.xlsx")
 
     #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").to_a.join);
     #outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
 
-    client = Restforce.new(oauth_token: '00D1w0000008aNu!AQcAQB9mzTN4EmJm8i8RZel7Vs3XC4wOJXWLHHcUfAisN2V8.eZoisKZAjUtH0EbucTfUxoTJjPQ5WfKkrDNlXVenkVzflM5',
+    client = Restforce.new(oauth_token: '00D1w0000008aNu!AQcAQAxX1U_i.Vgw6VxfVcZj9w8oM_OfbNebqgT7oBAV5L6TSBc3hcjXA6PcqHbpfo.AIstv6nco8zlXSBIANFumTonof2lF',
                        instance_url: 'https://sixt--salesdev.cs105.my.salesforce.com',
                        "token_type" => "Bearer",
                        api_version: '41.0')
