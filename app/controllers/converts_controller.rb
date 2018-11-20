@@ -29,7 +29,7 @@ class ConvertsController < ApplicationController
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}.xlsx")
 
     #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").to_a.join);
-    outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
+    #outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
     client = Restforce.new(username: 'bsign@sixt.com.salesdev',
                        password: 'Sixt@12348BSxw9A1OfRUTuL3oG0ytuvk',                      
                        client_id: '3MVG9LzKxa43zqdKnLMTH95Ka9p68HnwyETiLPkAVoLfVnOZnmstL7HEf67R4EjdK60OygJUcST5rxgAFjD4K',
