@@ -4,7 +4,7 @@ class ConvertsController < ApplicationController
   # GET /converts
   # GET /converts.json
   def index
-    connectsalesforce()
+    connectsalesforce('123','ggg');
    render json: {msg: "Yor are tring this servoice with get method please try with post",status:"Success"}
   end
 
@@ -26,16 +26,19 @@ class ConvertsController < ApplicationController
   end
   def connectsalesforce(id,fname)   
 
-    %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fileName}.xlsx")
+    %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}.xlsx")
 
     #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").to_a.join);
-    #outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
-
-    client = Restforce.new(oauth_token: '00D1w0000008aNu!AQcAQAxX1U_i.Vgw6VxfVcZj9w8oM_OfbNebqgT7oBAV5L6TSBc3hcjXA6PcqHbpfo.AIstv6nco8zlXSBIANFumTonof2lF',
-                       instance_url: 'https://sixt--salesdev.cs105.my.salesforce.com',
-                       "token_type" => "Bearer",
+    outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
+    client = Restforce.new(username: 'bsign@sixt.com.salesdev',
+                       password: 'Sixt@12348BSxw9A1OfRUTuL3oG0ytuvk',                      
+                       client_id: '3MVG9LzKxa43zqdKnLMTH95Ka9p68HnwyETiLPkAVoLfVnOZnmstL7HEf67R4EjdK60OygJUcST5rxgAFjD4K',
+                       client_secret: '8618267259260679484',
+                       host: 'test.salesforce.com',
                        api_version: '41.0')
-    puts client.inspect
+    
+    response =  client.authenticate!
+       
     client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: 'convert pdf',
