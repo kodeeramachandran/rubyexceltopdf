@@ -19,11 +19,10 @@ class ConvertsController < ApplicationController
   )
     id = params['AttachmentId']
 
-    #attachment = client.query("select Id, Name, Body from Attachment Where Id ="+ "'"+id+"'").first
+    attachment = client.query("select Id, Name, Body from Attachment Where Id ="+ "'"+id+"'").first
+    File.open("#{Rails.root}/public/#{attachment.Name}", 'wb') { |f| f.write(attachment.Body) } 
 
-    #File.open("#{Rails.root}/public/#{attachment.Name}", 'wb') { |f| f.write(attachment.Body) } 
-
-    render json: {recived: true,name: client}, status: :created, location: "Done"
+    render json: {recived: true}, status: :created, location: "Done",action: connectsalesforce(params['ParentId'],attachment.Name,client)
   end
   def connectsalesforce(id,fname,client) 
 
