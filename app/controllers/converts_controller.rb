@@ -4,45 +4,34 @@ class ConvertsController < ApplicationController
   # GET /converts
   # GET /converts.json
   def index
-    connectsalesforce('123','ggg');
-   render json: {msg: "Yor are tring this servoice with get method please try with post",status:"Success"}
+    render json: {msg: "Try with post"}, status: :created, location: "Done"
   end
 
   # POST /converts
   # POST /converts.json
-  def create      
-    path = File.join Rails.root, 'public'
-    fileName = params['File Name'];
-
-    File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
-     f.write(params['Xlsx Body'])
-    end 
-
-  
-  #download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"  
-  
-  render json: {recived: true}, status: :created, location: "Done",action: connectsalesforce(params['ParentId'],fileName)
-  end
-  def connectsalesforce(id,fname)   
-
-    %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}.xlsx")
-
-    #outputfileBase64 = Base64.encode64(open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").to_a.join);
-    #outputfileBase64 = open("#{Rails.root}/public/file_conversion/#{fileName}.pdf").read;
+  def create 
     client = Restforce.new(username: 'bsign@sixt.com.salesdev',
-                       password: 'Sixt@12348BSxw9A1OfRUTuL3oG0ytuvk',                      
-                       client_id: '3MVG9LzKxa43zqdKnLMTH95Ka9p68HnwyETiLPkAVoLfVnOZnmstL7HEf67R4EjdK60OygJUcST5rxgAFjD4K',
-                       client_secret: '8618267259260679484',
-                       host: 'test.salesforce.com',
-                       api_version: '41.0')
-    
-    response =  client.authenticate!
-       
-    create_attachement = client.create('Attachment', ParentId: id,
+    password: 'Sixt@12348BSxw9A1OfRUTuL3oG0ytuvk',                      
+    client_id: '3MVG9LzKxa43zqdKnLMTH95Ka9p68HnwyETiLPkAVoLfVnOZnmstL7HEf67R4EjdK60OygJUcST5rxgAFjD4K',
+    client_secret: '8618267259260679484',
+    host: 'test.salesforce.com',
+    api_version: '41.0'
+  )
+    id = params['AttachmentId']
+
+    attachment = client.query("select Id, Name, Body from Attachment Where Id ="+ "'"+id+"'").first
+    File.open("#{Rails.root}/public/#{attachment.Name}", 'wb') { |f| f.write(attachment.Body) } 
+
+    render json: {recived: true}, status: :created, location: "Done",action: connectsalesforce(params['ParentId'],attachment.Name,client)
+  end
+  def connectsalesforce(id,fname,client) 
+
+    pdfname = fname.gsub 'xlsx', 'pdf'
+    %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
+    client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: 'convert pdf',
-                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{fname}.pdf')))
-    
+                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{pdfname}.pdf')))    
    
   end
 end
