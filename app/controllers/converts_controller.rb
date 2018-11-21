@@ -1,5 +1,5 @@
 require_dependency 'libreconv'
-require_dependency 'Restforce'
+require 'Restforce'
 class ConvertsController < ApplicationController
  skip_before_action :verify_authenticity_token  
   # GET /converts
