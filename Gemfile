@@ -15,6 +15,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'duktape'
 gem 'docsplit'
 gem 'asf-soap-adapter', :require =>'activerecord-activesalesforce-adapter'
+gem 'devise', git: 'https://github.com/gogovan/devise.git', branch: 'rails-5.1'
+gem 'erubis
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
