@@ -30,7 +30,7 @@ class ConvertsController < ApplicationController
     client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: 'convert pdf',
-                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{pdfname}.pdf')))    
+                          Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{pdfname}')))    
    
   end
 end
