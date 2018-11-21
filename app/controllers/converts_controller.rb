@@ -21,16 +21,21 @@ class ConvertsController < ApplicationController
 
     attachment = client.query("select Id, Name, Body from Attachment Where Id ="+ "'"+id+"'").first
     File.open("#{Rails.root}/public/#{attachment.Name}", 'wb') { |f| f.write(attachment.Body) } 
-    render json: {recived: true}, status: :created, location: "Done",action: connectsalesforce(params['ParentId'],attachment.Name,client)
+    connectsalesforce(params['ParentId'],attachment.Name,client)
+    render json: {convertDone: true}, status: :created, location: "Done"
   end
   def connectsalesforce(id,fname,client) 
 
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
+
     client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: pdfname,
-                          Body: Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}")))    
+                          Body: Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))) 
+
+    File.delete("#{Rails.root}/public/file_conversion/#{pdfname}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdfname}") 
+    File.delete("#{Rails.root}/public/#{fname}") if File.exist?("#{Rails.root}/public/#{fname}")     
    
   end
 end
