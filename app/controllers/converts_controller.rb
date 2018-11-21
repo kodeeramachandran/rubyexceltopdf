@@ -14,15 +14,14 @@ class ConvertsController < ApplicationController
     path = File.join Rails.root, 'public'
     fileName = params['File Name'];
 
-    #File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
-     #f.write(params['Xlsx Body'])
-    #end 
+    File.open("#{Rails.root}/public/#{fileName}.xlsx", 'wb') do |f|
+     f.write(params['Xlsx Body'])
+    end 
 
   
-  #download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"
+  #download_file_path = "#{Rails.root}/public/file_conversion/#{fileName}.pdf"  
   
- # connectsalesforce(params['ParentId'],fileName);
-  render json: {recived: true}, status: :created, location: "Done"
+  render json: {recived: true}, status: :created, location: "Done",action: connectsalesforce(params['ParentId'],fileName)
   end
   def connectsalesforce(id,fname)   
 
@@ -39,10 +38,11 @@ class ConvertsController < ApplicationController
     
     response =  client.authenticate!
        
-    client.create('Attachment', ParentId: id,
+    create_attachement = client.create('Attachment', ParentId: id,
                           Description: 'Document test',
                           Name: 'convert pdf',
                           Body: Base64::encode64(File.read('#{Rails.root}/public/file_conversion/#{fname}.pdf')))
+    
    
   end
 end
