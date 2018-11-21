@@ -29,7 +29,7 @@ class ConvertsController < ApplicationController
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
     client.create('Attachment', ParentId: id,
                           Description: 'Document test',
-                          Name: 'convert pdf',
+                          Name: pdfname,
                           Body: Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}")))    
    
   end
