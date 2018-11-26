@@ -11,7 +11,7 @@ class ConvertsController < ApplicationController
   # POST /converts
   # POST /converts.json
   def create 
-    header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+params['sessionId']}
+    header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+params['SessionId']}
     id = params['AttachmentId']
     baseURL = params['Url']
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/"+id+"/Body")
@@ -24,6 +24,7 @@ class ConvertsController < ApplicationController
     convertandCreateAttachment(params['ParentId'],params['Name'],params['sessionId'],baseURL)
     render json: {convertDone: true}, status: :created, location: "Done"
   end
+  
   def convertandCreateAttachment(id,fname,sessionId, baseURL)
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
@@ -38,7 +39,7 @@ class ConvertsController < ApplicationController
     res = https.request(req)
     puts res
     File.delete("#{Rails.root}/public/file_conversion/#{pdfname}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdfname}") 
-    File.delete("#{Rails.root}/public/#{fname}") if File.exist?("#{Rails.root}/public/#{fname}")   
+    File.delete("#{Rails.root}/public/#{fname}") if File.exist?("#{Rails.root}/public/#{fname}")  
    
   end
 end
