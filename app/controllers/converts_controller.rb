@@ -13,7 +13,7 @@ class ConvertsController < ApplicationController
   def create 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+params['sessionId']}
     id = params['AttachmentId']
-    baseURL = params['url']
+    baseURL = params['Url']
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/"+id+"/Body")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
