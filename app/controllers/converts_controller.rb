@@ -18,7 +18,7 @@ class ConvertsController < ApplicationController
     uri = URI.parse(baseURL+"/services/data/v40.0/sobjects/Attachment/"+id+"/Body")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
-    https.ssl_version = :SSLv3
+    #https.ssl_version = :SSLv3
     req = Net::HTTP::Get.new(uri.path, header)
     attachment = https.request(req)
     
