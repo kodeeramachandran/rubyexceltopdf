@@ -1,9 +1,6 @@
 require_dependency 'libreconv'
 require 'json'
 require 'open-uri'
-require 'openssl'
-require 'net/https'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class ConvertsController < ApplicationController
  skip_before_action :verify_authenticity_token  
   # GET /converts
@@ -18,10 +15,9 @@ class ConvertsController < ApplicationController
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+params['SessionId']}
     id = params['AttachmentId']
     baseURL = params['Url']
-    uri = URI.parse(baseURL+"/services/data/v40.0/sobjects/Attachment/"+id+"/Body")
+    uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/"+id+"/Body")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
-    #https.ssl_version = :SSLv3
     req = Net::HTTP::Get.new(uri.path, header)
     attachment = https.request(req)
     
@@ -36,7 +32,7 @@ class ConvertsController < ApplicationController
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
     data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))}
-    uri = URI.parse(baseURL+"/services/data/v40.0/sobjects/Attachment/")
+    uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
     req = Net::HTTP::Post.new(uri.path, header)
