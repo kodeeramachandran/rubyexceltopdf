@@ -32,6 +32,8 @@ class ConvertsController < ApplicationController
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
 
+    %x("pdftk #{Rails.root}/public/file_conversion/#{pdfname} cat 1-20 22-end output #{Rails.root}/public/file_conversion/#{pdfname}")
+
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
     data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
