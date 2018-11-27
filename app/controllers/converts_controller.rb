@@ -29,7 +29,7 @@ class ConvertsController < ApplicationController
   end
   
   def convertandCreateAttachment(id,fname,sessionId, baseURL)
-    pdfname = fname.gsub 'xlsx', '.docx'
+    pdfname = fname.gsub 'xlsx', 'docx'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to txt --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
