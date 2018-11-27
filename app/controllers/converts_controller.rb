@@ -24,7 +24,7 @@ class ConvertsController < ApplicationController
     attachment = https.request(req)
     
     File.open("#{Rails.root}/public/#{params['Name']}", 'wb') { |f| f.write(attachment.body) } 
-    convertandCreateAttachment(params['ParentId'],params['Name'],params['sessionId'],baseURL)
+    convertandCreateAttachment(params['ParentId'],params['Name'],params['SessionId'],baseURL)
     render json: {convertDone: true}, status: :created, location: "Done"
   end
   
