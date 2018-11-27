@@ -32,10 +32,10 @@ class ConvertsController < ApplicationController
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
 
-    %x("pdftk #{Rails.root}/public/file_conversion/#{pdfname} cat 1 3-end output #{Rails.root}/public/file_conversion/r#{pdfname}")
+    %x("pdftk #{Rails.root}/public/file_conversion/#{pdfname} cat 1 3-end output #{Rails.root}/public/file_conversion/kk.pdf")
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
-    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/r#{pdfname}"))}
+    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/kk.pdf"))}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
