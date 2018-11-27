@@ -1,7 +1,8 @@
 require_dependency 'libreconv'
 require 'json'
 require 'openssl'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+require 'net/https'
+
 class ConvertsController < ApplicationController
  skip_before_action :verify_authenticity_token  
   # GET /converts
@@ -18,7 +19,7 @@ class ConvertsController < ApplicationController
     baseURL = params['Url']
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/"+id+"/Body")
     https = Net::HTTP.new(uri.host,uri.port)
-    https.use_ssl = true
+    https.use_ssl = false
     req = Net::HTTP::Get.new(uri.path, header)
     attachment = https.request(req)
     
