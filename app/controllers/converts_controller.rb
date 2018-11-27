@@ -1,6 +1,8 @@
 require_dependency 'libreconv'
 require 'json'
 require 'open-uri'
+require 'openssl'
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class ConvertsController < ApplicationController
  skip_before_action :verify_authenticity_token  
   # GET /converts
