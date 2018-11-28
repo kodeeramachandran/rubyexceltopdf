@@ -31,15 +31,15 @@ class ConvertsController < ApplicationController
   def convertandCreateAttachment(id,fname,sessionId, baseURL)
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
-    isRemove = true       
+    isRemove = true 
+    pdf = pdfname      
     if isRemove
-      removefilename =  'r'+pdfname
-      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/kk.pdf'")
-      pdfname = 'kk.pdf'
+      pdf =  'r'+pdfname
+      %x("pdftk public/file_conversion/#{pdfname} cat 1 3-end output public/file_conversion/#{pdf}")     
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
-    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))}
+    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdf}"))}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
@@ -48,6 +48,7 @@ class ConvertsController < ApplicationController
     res = https.request(req)
     puts res
     File.delete("#{Rails.root}/public/file_conversion/#{pdfname}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdfname}") 
+    File.delete("#{Rails.root}/public/file_conversion/#{pdf}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdf}")
     File.delete("#{Rails.root}/public/#{fname}") if File.exist?("#{Rails.root}/public/#{fname}")  
    
   end
