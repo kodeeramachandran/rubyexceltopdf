@@ -1,0 +1,17 @@
+\documentclass[8pt]{article}
+\usepackage[final]{pdfpages}
+\usepackage{fancyhdr}
+
+\topmargin 70pt
+\oddsidemargin 150pt
+
+\pagestyle{fancy}
+\rfoot{\Large\thepage}
+\cfoot{}
+\renewcommand {\headrulewidth}{0pt}
+\renewcommand {\footrulewidth}{0pt}
+
+\begin{document}
+\includepdfset{pagecommand=\thispagestyle{fancy}}
+\includepdf[pages=-]{input.pdf}
+\end{document}
