@@ -34,7 +34,7 @@ class ConvertsController < ApplicationController
     isRemove = true 
     pdf = pdfname      
     if isRemove && isconvert
-      pdf =  Time.now.to_i+pdfname
+      pdf =  (Time.now.to_i).to_s+pdfname
       system("pdftk public/file_conversion/'#{pdfname}' cat 1 3-end output public/file_conversion/'#{pdf}'")     
     end
 
