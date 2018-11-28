@@ -34,7 +34,7 @@ class ConvertsController < ApplicationController
     isRemove = false       
     if isRemove
       removefilename =  'r'+pdfname
-      exec("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/kk.pdf'")
+      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/kk.pdf'")
       pdfname = removefilename
     end
 
