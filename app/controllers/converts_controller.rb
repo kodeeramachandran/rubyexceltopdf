@@ -35,11 +35,11 @@ class ConvertsController < ApplicationController
     if isRemove
       removefilename =  'r'+pdfname
       %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/kk.pdf'")
-      pdfname = removefilename
+      pdfname = 'kk.pdf'
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
-    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/kk.pdf"))}
+    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
