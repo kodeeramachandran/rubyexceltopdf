@@ -34,8 +34,8 @@ class ConvertsController < ApplicationController
     isRemove = true 
     pdf = pdfname      
     if isRemove && isconvert
-      pdf =  'r'+pdfname
-      system("pdftk public/file_conversion/#{pdfname} cat 1 3-end output public/file_conversion/#{pdf}")     
+      pdf =  Time.now.to_i+pdfname
+      system("pdftk public/file_conversion/'#{pdfname}' cat 1 3-end output public/file_conversion/'#{pdf}'")     
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
