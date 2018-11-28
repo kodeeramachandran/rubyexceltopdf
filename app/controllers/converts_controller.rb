@@ -33,8 +33,9 @@ class ConvertsController < ApplicationController
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
     isRemove = true       
     if isRemove
-      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/r#{pdfname}'")
-      pdfname = 'r'+pdfname
+      removefilename =  'r'+pdfname
+      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/#{removefilename}'")
+      pdfname = removefilename
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
