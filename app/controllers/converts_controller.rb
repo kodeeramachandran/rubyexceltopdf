@@ -31,9 +31,10 @@ class ConvertsController < ApplicationController
   def convertandCreateAttachment(id,fname,sessionId, baseURL)
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
-    isRemove = true    
+    isRemove = true       
     if isRemove
-      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/#{pdfname}'")
+      %x("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/r#{pdfname}'")
+      pdfname = 'r'+pdfname
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
