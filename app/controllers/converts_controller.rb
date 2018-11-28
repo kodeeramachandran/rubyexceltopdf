@@ -33,10 +33,10 @@ class ConvertsController < ApplicationController
     isconvert = %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
     isRemove = false 
     pdf = pdfname      
-    if isRemove && isconvert
-      pdf =  (Time.now.to_i).to_s+pdfname
-      system("pdftk public/file_conversion/'#{pdfname}' cat 1 3-end output public/file_conversion/'#{pdf}'")     
-    end
+    #if isRemove && isconvert
+     # pdf =  (Time.now.to_i).to_s+pdfname
+      #system("pdftk public/file_conversion/'#{pdfname}' cat 1 3-end output public/file_conversion/'#{pdf}'")     
+    #end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
     data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdf}"))}
