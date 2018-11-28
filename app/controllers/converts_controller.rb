@@ -31,15 +31,15 @@ class ConvertsController < ApplicationController
   def convertandCreateAttachment(id,fname,sessionId, baseURL)
     pdfname = fname.gsub 'xlsx', 'pdf'
     %x("#{Rails.root}/public/office/program/swriter" --headless --invisible --nocrashreport --nodefault --nologo --nofirststartwizard --norestore --convert-to pdf --outdir  "#{Rails.root}/public/file_conversion/" "#{Rails.root}/public/#{fname}")          
-    isRemove = true       
+    isRemove = false       
     if isRemove
       removefilename =  'r'+pdfname
-      exec("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/#{removefilename}'")
+      exec("pdftk 'public/file_conversion/#{pdfname}' cat 1 3-end output 'public/file_conversion/kk.pdf'")
       pdfname = removefilename
     end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
-    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdfname}"))}
+    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/kk.pdf"))}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
