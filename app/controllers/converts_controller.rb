@@ -47,8 +47,8 @@ class ConvertsController < ApplicationController
     req.body = data.to_json
     res = https.request(req)
     puts res
-    File.delete("#{Rails.root}/public/file_conversion/#{pdfname}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdfname}") 
-    File.delete("#{Rails.root}/public/file_conversion/#{pdf}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdf}")
+    #File.delete("#{Rails.root}/public/file_conversion/#{pdfname}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdfname}") 
+    #File.delete("#{Rails.root}/public/file_conversion/#{pdf}") if File.exist?("#{Rails.root}/public/file_conversion/#{pdf}")
     File.delete("#{Rails.root}/public/#{fname}") if File.exist?("#{Rails.root}/public/#{fname}")  
    
   end
