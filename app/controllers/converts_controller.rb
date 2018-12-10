@@ -39,7 +39,7 @@ class ConvertsController < ApplicationController
     #end
 
     header = {'Content-Type' =>'application/json','Authorization' => 'OAuth '+sessionId}
-    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdf}"))}
+    data = {"ParentId" => id,"Description" => "Convert document","Name" => pdfname, "Body" => Base64::encode64(File.read("#{Rails.root}/public/file_conversion/#{pdf}")), "contenttype": "application/pdf"}
     uri = URI.parse(baseURL+"/services/data/v44.0/sobjects/Attachment/")
     https = Net::HTTP.new(uri.host,uri.port)
     https.use_ssl = true
